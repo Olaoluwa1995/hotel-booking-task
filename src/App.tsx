@@ -1,26 +1,27 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { CSSReset, ChakraProvider, theme } from "@chakra-ui/react";
+import { customTheme } from './styles/theme';
+import withSplashScreen, { SplashComponent } from './HOCs/splash-screen/splash-screen.component';
+import { Route, Switch } from 'react-router-dom';
+import { BaseRoutes } from "./routes/route.component";
 
-function App() {
+const App: React.FC<any> = () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraProvider theme={{ ...theme, ...customTheme }}>
+      <CSSReset />
+      <Suspense fallback={<SplashComponent />}>
+        <Switch>
+          {BaseRoutes.map(({ ...props }) => {
+            return <Route {...props} />;
+          })}
+        </Switch>
+      </Suspense>
+    </ChakraProvider>
   );
-}
+};
 
-export default App;
+export default withSplashScreen(App);
+
