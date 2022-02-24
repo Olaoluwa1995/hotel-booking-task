@@ -1,0 +1,11 @@
+.description {
+  opacity: 0;
+}
+
+.card:hover img {
+  opacity: 0.3;
+}
+
+.card:hover .description {
+  opacity: 1;
+}
